@@ -10,7 +10,7 @@ import InterviewPage from "./pages/InterviewPage";
 import InterviewHistory from "./pages/InterviewHistory";
 import InterviewReport from "./pages/InterviewReport"
 import Pricing from "./pages/Pricing";
-export const Serverurl = "http://localhost:5000";
+export const Serverurl = "https://ai-interview-platform-nl2k.onrender.com";
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
