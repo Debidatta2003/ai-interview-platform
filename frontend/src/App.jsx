@@ -3,19 +3,11 @@ import { Route, Routes } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setUserData } from "./redux/userSlice";
-
+import InterviewPage from "./pages/InterviewPage";
+import InterviewHistory from "./pages/InterviewHistory";
+import InterviewReport from "./pages/InterviewReport"
+import Pricing from "./pages/Pricing";
 export const Serverurl = "http://localhost:5000";
-
-// Lazy Imports
-const Home = lazy(() => import("./pages/Home"));
-const Auth = lazy(() => import("./pages/Auth"));
-const InterviewPage = lazy(() => import("./pages/InterviewPage"));
-const InterviewHistory = lazy(() => import("./pages/InterviewHistory"));
-const InterviewReport = lazy(() => import("./pages/InterviewReport"));
-const Pricing = lazy(() => import("./pages/Pricing"));
-const Dsa = lazy(() => import("./pages/Dsa"));
-const Topic = lazy(() => import("./pages/Topic"));
-
 function App() {
   const dispatch = useDispatch();
 
