@@ -7,6 +7,10 @@ import InterviewPage from "./pages/InterviewPage";
 import InterviewHistory from "./pages/InterviewHistory";
 import InterviewReport from "./pages/InterviewReport"
 import Pricing from "./pages/Pricing";
+import Home from "./pages/Home";
+import Auth from "./pages/Auth";
+import Topic from "./pages/Topic"
+import Dsa from "./pages/Dsa"
 export const Serverurl = "http://localhost:5000";
 function App() {
   const dispatch = useDispatch();

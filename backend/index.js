@@ -11,7 +11,7 @@ import paymentRouter from "./routes/payment.route.js";
 import dsaRouter from "./routes/dsa.route.js";
 const app = express();
 app.use(cors({
-  origin : "https://ai-interview-platform-1-58l6.onrender.com",
+  origin : "http://localhost:5173",
   credentials:true
 }))
 app.use(express.json())
