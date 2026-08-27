@@ -10,6 +10,7 @@ export const askAi = async (messages) => {
       {
         model: "openai/gpt-4o-mini",
         messages: messages,
+        max_tokens: 2000,
       },
       {
         headers: {
@@ -27,7 +28,11 @@ export const askAi = async (messages) => {
 
     return content;
   } catch (error) {
-    console.error("OpenRouter Error:", error.response?.data || error.message);
+    console.error(
+      "OpenRouter Error:",
+      error.response?.status,
+      JSON.stringify(error.response?.data, null, 2) || error.message,
+    );
     throw new Error("OpenRouter API Error");
   }
 };

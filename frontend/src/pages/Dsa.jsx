@@ -8,7 +8,6 @@ import axios from "axios";
 import { Serverurl } from "../App";
 import codeTemplates from "../utils/Tamplet";
 import CodeOutput from "../components/CodeOutput";
-
 function Dsa() {
   const [afterrundata, setafterrundata] = useState({});
   const [running, setRunning] = useState(false);
@@ -98,7 +97,7 @@ function Dsa() {
         },
         {
           withCredentials: true,
-        }
+        },
       );
 
       console.log("Response:", res.data);
@@ -138,7 +137,6 @@ function Dsa() {
 
   return (
     <div className="flex h-screen bg-[#0F172A] overflow-hidden">
-
       {/* ================= LEFT PANEL ================= */}
 
       <div className="w-[35%] min-w-[380px] border-r border-gray-700">
@@ -152,13 +150,10 @@ function Dsa() {
       {/* ================= RIGHT PANEL ================= */}
 
       <div className="flex-1 flex flex-col bg-[#1E1E1E]">
-
         {/* ================= HEADER ================= */}
 
         <div className="h-20 bg-[#252526] border-b border-gray-700 flex items-center justify-between px-6">
-
           <div className="flex items-center gap-5">
-
             {/* LANGUAGE */}
 
             <select
@@ -178,33 +173,41 @@ function Dsa() {
 
             {/* TIMER */}
 
-            <Timer2
-              timeLeft={timeLeft}
-              totalTime={totalTime}
-            />
-
+            <Timer2 timeLeft={timeLeft} totalTime={totalTime} />
           </div>
 
           {/* ================= RUN BUTTON ================= */}
 
           <div className="flex gap-3">
-
             <button
               onClick={handleRun}
               disabled={running}
-              className="px-6 py-2 rounded-lg bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-semibold transition"
+              className="
+                group flex items-center gap-2
+                px-5 py-2.5
+                rounded-lg
+                bg-green-600
+                hover:bg-green-500
+                active:scale-95
+                disabled:bg-gray-600
+                disabled:cursor-not-allowed
+                text-white
+                font-semibold
+                shadow-lg shadow-green-600/20
+                hover:shadow-green-500/30
+                transition-all duration-200"
             >
-              ▶ Run
+              <span className="text-lg transition-transform duration-200 group-hover:scale-110">
+                ▶
+              </span>
+              Run
             </button>
-
           </div>
-
         </div>
 
         {/* ================= EDITOR ================= */}
 
         <div className="flex-1 overflow-hidden">
-
           <Editor
             height="100%"
             language={language}
@@ -239,28 +242,22 @@ function Dsa() {
               },
             }}
           />
-
         </div>
 
         {/* ================= BOTTOM PANEL ================= */}
 
         <div className="h-56 border-t border-gray-700 bg-[#181818]">
-
           {/* ================= TEST CASE ================= */}
 
-          {!showInput && !hasRun && (
-            <Testcase testcase={testcase} />
-          )}
+          {!showInput && !hasRun && <Testcase testcase={testcase} />}
 
           {/* ================= INPUT BOX ================= */}
 
           {showInput && !hasRun && (
             <div className="h-full flex flex-col">
-
               {/* Header */}
 
               <div className="h-10 flex items-center justify-between px-4 border-b border-gray-700">
-
                 <span className="text-sm font-semibold text-gray-300">
                   Input
                 </span>
@@ -271,13 +268,11 @@ function Dsa() {
                 >
                   ✕
                 </button>
-
               </div>
 
               {/* Input */}
 
               <div className="flex-1 p-3">
-
                 <textarea
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
@@ -285,23 +280,36 @@ function Dsa() {
                   className="w-full h-full resize-none bg-[#1E1E1E] text-white border border-gray-700 rounded-md p-3 outline-none font-mono text-sm focus:border-blue-500"
                   autoFocus
                 />
-
               </div>
 
               {/* Execute button */}
 
               <div className="h-12 flex justify-end items-center px-4 border-t border-gray-700">
-
                 <button
                   onClick={handleExecute}
                   disabled={running}
-                  className="px-5 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white rounded-lg font-semibold"
+                  className="
+                    group flex items-center gap-2
+                    px-5 py-2.5
+                    rounded-lg
+                    bg-blue-600
+                    hover:bg-blue-500
+                    active:scale-95
+                    disabled:bg-gray-600
+                    disabled:cursor-not-allowed
+                    text-white
+                    font-semibold
+                    shadow-lg shadow-blue-600/20
+                    hover:shadow-blue-500/30
+                    transition-all duration-200"
                 >
-                  {running ? "Executing..." : "▶ Execute"}
+                  <span className="text-lg transition-transform duration-200 group-hover:scale-110">
+                    {running ? "⏳" : "▶"}
+                  </span>
+
+                  {running ? "Executing..." : "Execute"}
                 </button>
-
               </div>
-
             </div>
           )}
 
@@ -315,11 +323,8 @@ function Dsa() {
               onClose={handleCloseOutput}
             />
           )}
-
         </div>
-
       </div>
-
     </div>
   );
 }

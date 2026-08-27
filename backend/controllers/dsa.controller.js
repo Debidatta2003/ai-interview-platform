@@ -1,10 +1,7 @@
 import { askAi } from "../services/openRouter.service.js";
 import User from "../models/user.model.js";
 import axios from "axios";
-import {
-  LANGUAGE_VERSIONS,
-  PISTON_LANGUAGES,
-} from "../services/dsa.service.js";
+import JUDGE0_LANGUAGE_IDS from "../services/dsa.service.js";
 
 export const GenerateQustein = async (req, res) => {
   try {
@@ -190,15 +187,10 @@ Do not invent outputs.
   }
 };
 
-const pistonAPI = axios.create({
-  baseURL: process.env.PISTON_URL,
-});
-
+const JUDGE0_URL = process.env.JUDGE0_URL;
 export const runCode = async (req, res) => {
   try {
-    const { language, code ,input} = req.body;
-    console.log(language);
-
+    const { language, code, input } = req.body;
     if (!code) {
       return res.status(400).json({
         success: false,
@@ -213,25 +205,51 @@ export const runCode = async (req, res) => {
       });
     }
 
-    const response = await pistonAPI.post("/execute", {
-      language: PISTON_LANGUAGES[language],
-      version: LANGUAGE_VERSIONS[language],
-      files: [
-        {
-          content: code,
+    const languageId = JUDGE0_LANGUAGE_IDS[language];
+
+    if (!languageId) {
+      return res.status(400).json({
+        success: false,
+        message: "Unsupported language",
+      });
+    }
+
+    // Submit code to Judge0
+    const submissionResponse = await axios.post(
+      `${JUDGE0_URL}/submissions?base64_encoded=true&wait=true`,
+      {
+        language_id: languageId,
+        source_code: Buffer.from(code, "utf8").toString("base64"),
+        stdin: input ? Buffer.from(input, "utf8").toString("base64") : "",
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
         },
-      ],
-      stdin: input || "",
-    });
+      },
+    );
+
+    const response = submissionResponse.data;
 
     return res.status(200).json({
       success: true,
-      output: response.data.run.stdout,
-      error: response.data.run.stderr,
-      code: response.data.run.code,
+      output: response.stdout
+        ? Buffer.from(response.stdout, "base64").toString("utf8")
+        : "",
+      error: response.stderr
+        ? Buffer.from(response.stderr, "base64").toString("utf8")
+        : response.compile_output
+          ? Buffer.from(response.compile_output, "base64").toString("utf8")
+          : "",
+      compile_output: response.compile_output
+        ? Buffer.from(response.compile_output, "base64").toString("utf8")
+        : "",
+      status: response.status,
+      time: response.time,
+      memory: response.memory,
     });
   } catch (error) {
-    console.error("Piston execution error:", error);
+    console.error("Judge0 execution error:", error);
 
     return res.status(500).json({
       success: false,
