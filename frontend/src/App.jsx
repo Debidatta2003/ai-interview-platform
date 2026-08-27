@@ -11,7 +11,7 @@ import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 import Topic from "./pages/Topic"
 import Dsa from "./pages/Dsa"
-export const Serverurl = "http://localhost:5000";
+export const Serverurl = "https://ai-interview-platform-1-abyx.onrender.com";
 function App() {
   const dispatch = useDispatch();
 
